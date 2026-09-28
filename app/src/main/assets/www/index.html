@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#1a365d" id="metaThemeColor">
+  <title>नमस्ते Hindi - Learn Devanagari & 1000 Core Words</title>
+  <!-- Google Fonts for crisp typography and authentic Devanagari display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600;700;800&family=Rozha+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <div class="brand-logo">हिं</div>
+      <div class="brand-text">
+        <h1>Namaste Hindi</h1>
+        <span>Devanagari & 1000 Core Vocabulary</span>
+      </div>
+    </div>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="letters">
+        <span class="icon">🔤</span> Letters & Script
+      </button>
+      <button class="nav-tab" data-tab="canvas">
+        <span class="icon">✍️</span> Stroke Canvas
+      </button>
+      <button class="nav-tab" data-tab="words">
+        <span class="icon">📚</span> 1000 Words
+      </button>
+      <button class="nav-tab" data-tab="quiz">
+        <span class="icon">🎯</span> Quiz Arena
+      </button>
+      <button class="nav-tab" data-tab="dashboard">
+        <span class="icon">📊</span> Progress
+      </button>
+    </nav>
+
+    <!-- User Profile & Settings Bar -->
+    <div class="user-panel">
+      <button class="btn-icon theme-toggle-btn" id="btnToggleTheme" title="Toggle AMOLED Dark Mode">🌙</button>
+      <div class="streak-badge" title="Daily study streak">
+        🔥 <span id="userStreak">1</span> Day
+      </div>
+      <div class="user-dropdown">
+        <span id="activeUserName">Default Learner</span>
+        <button class="btn-icon" id="btnSwitchUser" title="Switch Learner">👤</button>
+      </div>
+      <button class="btn-icon" id="btnOpenSettings" title="Deck Settings & Import">⚙️</button>
+    </div>
+
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+
+    <!-- ========================================================
+         TAB 1: LETTERS & DEVANAGARI ALPHABET
+         ======================================================== -->
+    <section id="tab-letters" class="tab-pane active">
+      <div class="section-header">
+        <div>
+          <h2>Devanagari Alphabet (वर्णमाला)</h2>
+          <p class="subtitle">Master vowels (स्वर), consonants (व्यंजन), vowel signs (मात्राएँ), conjuncts, and numbers with native audio.</p>
+        </div>
+        <div class="header-actions">
+          <div class="view-toggle">
+            <button class="btn-toggle active" id="btnLetterViewGrid">Grid View</button>
+            <button class="btn-toggle" id="btnLetterViewFlashcard">Flashcard Mode</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="filter-pills" id="letterCategories">
+        <button class="pill active" data-cat="all">All Characters (79)</button>
+        <button class="pill" data-cat="vowel">Vowels / स्वर (13)</button>
+        <button class="pill" data-cat="consonant">Consonants / व्यंजन (35)</button>
+        <button class="pill" data-cat="matra">Matras / मात्राएँ (14)</button>
+        <button class="pill" data-cat="conjunct">Conjuncts / संयुक्ताक्षर (7)</button>
+        <button class="pill" data-cat="number">Numbers / अंक (10)</button>
+      </div>
+
+      <!-- Letters Grid View -->
+      <div id="lettersGridView" class="letters-grid">
+        <!-- Rendered dynamically via JS -->
+      </div>
+
+      <!-- Letters Flashcard View -->
+      <div id="lettersFlashcardView" class="flashcard-container" style="display: none;">
+        <div class="flashcard-progress">
+          <span id="letterCardIndex">Card 1 of 79</span>
+          <div class="progress-bar-bg">
+            <div id="letterCardProgressBar" class="progress-bar-fill" style="width: 1%;"></div>
+          </div>
+        </div>
+
+        <div class="flashcard" id="letterCard">
+          <div class="flashcard-inner" id="letterCardInner">
+            <div class="flashcard-front">
+              <span class="card-badge" id="lfcCategory">Vowel</span>
+              <div class="char-display" id="lfcChar">अ</div>
+              <div class="flip-hint">Click card to reveal pronunciation & meaning</div>
+              <button class="btn-audio" id="lfcAudioBtn" title="Listen to pronunciation">🔊 Speak</button>
+            </div>
+            <div class="flashcard-back">
+              <span class="card-badge" id="lfcSubgroup">Short Vowel</span>
+              <div class="char-translit" id="lfcTranslit">a</div>
+              <p class="pronounce-guide" id="lfcGuide">Short 'u' sound as in 'cup'</p>
+              <div class="example-box">
+                <span class="ex-label">Example Word:</span>
+                <span class="ex-hindi" id="lfcExHindi">अनार</span>
+                <span class="ex-translit" id="lfcExTranslit">(anaar)</span>
+                <span class="ex-meaning" id="lfcExMeaning">— pomegranate</span>
+              </div>
+              <div class="card-actions">
+                <button class="btn-secondary" id="btnOpenStrokeFromCard">✍️ Practice Writing</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard-controls">
+          <button class="btn-nav" id="btnPrevLetterCard">← Previous</button>
+          <button class="btn-action btn-review-again" id="btnLetterMarkNeed">Need Practice</button>
+          <button class="btn-action btn-review-good" id="btnLetterMarkMastered">Got It! ✓</button>
+          <button class="btn-nav" id="btnNextLetterCard">Next →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 2: STROKE & DRAWING CANVAS
+         ======================================================== -->
+    <section id="tab-canvas" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>Devanagari Stroke & Writing Canvas (अक्षर लेखन)</h2>
+          <p class="subtitle">Trace and write Hindi characters with interactive stroke feedback and stroke guides.</p>
+        </div>
+        <div class="header-actions">
+          <div class="select-wrapper">
+            <label for="canvasLetterSelect">Select Character: </label>
+            <select id="canvasLetterSelect" class="form-select">
+              <!-- Dynamically populated -->
+            </select>
+          </div>
+          <button class="btn-primary" id="btnSpeakCanvasLetter">🔊 Speak</button>
+        </div>
+      </div>
+
+      <div class="canvas-workspace">
+        <!-- Canvas Drawing Board -->
+        <div class="canvas-card">
+          <div class="canvas-header-info">
+            <span class="char-preview-title" id="canvasCharTitle">Character: <strong>क (ka)</strong></span>
+            <span class="char-stroke-hint" id="canvasStrokeHint">1. Vertical line, 2. Left loop, 3. Right arch, 4. Top bar</span>
+          </div>
+
+          <div class="canvas-wrapper">
+            <canvas id="paintCanvas" width="460" height="460"></canvas>
+            <div id="canvasWatermark" class="canvas-watermark">क</div>
+          </div>
+
+          <!-- Canvas Controls Toolbar -->
+          <div class="canvas-toolbar">
+            <div class="tool-group">
+              <label>Color:</label>
+              <input type="color" id="paintColor" value="#ff6f00">
+            </div>
+            <div class="tool-group">
+              <label>Brush:</label>
+              <input type="range" id="brushSize" min="4" max="28" value="12">
+              <span id="brushSizeDisplay">12px</span>
+            </div>
+            <div class="tool-group">
+              <label>
+                <input type="checkbox" id="chkShowGuide" checked> Guide Watermark
+              </label>
+            </div>
+            <div class="tool-group spen-feature-group">
+              <span class="spen-badge" id="spenBadge" title="Samsung Galaxy S24 Ultra S-Pen">✍️ S-Pen Ready</span>
+              <label class="tool-toggle" title="Ignore hand/palm touches while drawing with S-Pen">
+                <input type="checkbox" id="chkPalmRejection"> Palm Rejection
+              </label>
+            </div>
+            <div class="tool-actions">
+              <button class="btn-outline" id="btnClearCanvas">🗑️ Clear</button>
+              <button class="btn-outline" id="btnUndoCanvas">↩️ Undo</button>
+              <button class="btn-success" id="btnSaveDrawProgress">✓ Done Practicing</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Quick Letter Selector Strip -->
+        <div class="quick-letter-strip">
+          <h3>Quick Select:</h3>
+          <div class="strip-grid" id="quickLetterGrid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 3: 1000 HIGH-FREQUENCY WORDS
+         ======================================================== -->
+    <section id="tab-words" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>1000 Most Frequent Hindi Words (शब्दावली)</h2>
+          <p class="subtitle">Organized into 20 structured 50-word decks with authentic Devanagari, romanization, and full example sentences.</p>
+        </div>
+        <div class="header-actions">
+          <div class="view-toggle">
+            <button class="btn-toggle active" id="btnWordViewList">Vocabulary Explorer</button>
+            <button class="btn-toggle" id="btnWordViewSRS">SRS Flashcards</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deck Selector & Search Bar -->
+      <div class="words-control-bar">
+        <div class="deck-selector-area">
+          <label for="deckSelect">Study Deck (50 words each):</label>
+          <select id="deckSelect" class="form-select deck-select">
+            <!-- Decks 1 to 20 dynamically loaded -->
+          </select>
+        </div>
+
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="wordSearchInput" placeholder="Search Hindi, transliteration (namaste), or English...">
+          <button class="btn-clear-search" id="btnClearSearch" title="Clear">✕</button>
+        </div>
+      </div>
+
+      <!-- Deck Summary Stats Bar -->
+      <div class="deck-stats-bar" id="deckStatsBar">
+        <div class="deck-title-badge" id="currentDeckTitle">Deck 1: Core Pronouns & Essentials (1-50)</div>
+        <div class="deck-counts">
+          <span class="count-tag mastered">Mastered: <strong id="deckMasteredCount">0</strong></span>
+          <span class="count-tag learning">Learning: <strong id="deckLearningCount">0</strong></span>
+          <span class="count-tag unseen">Unseen: <strong id="deckUnseenCount">50</strong></span>
+        </div>
+      </div>
+
+      <!-- WORD VIEW 1: Vocabulary Explorer List -->
+      <div id="wordsListView" class="words-grid">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- WORD VIEW 2: SRS Flashcards Mode -->
+      <div id="wordsSRSView" class="flashcard-container" style="display: none;">
+        <div class="flashcard-progress">
+          <span id="wordCardIndex">Word 1 of 50</span>
+          <div class="progress-bar-bg">
+            <div id="wordCardProgressBar" class="progress-bar-fill" style="width: 2%;"></div>
+          </div>
+        </div>
+
+        <div class="flashcard word-flashcard" id="wordCard">
+          <div class="flashcard-inner" id="wordCardInner">
+            <!-- Front -->
+            <div class="flashcard-front">
+              <span class="card-badge" id="wfcRank">#1</span>
+              <div class="word-char-display" id="wfcHindi">नमस्ते</div>
+              <div class="flip-hint">Click card to reveal meaning, Romanization & example</div>
+              <button class="btn-audio" id="wfcAudioBtn">🔊 Pronounce Word</button>
+            </div>
+            <!-- Back -->
+            <div class="flashcard-back">
+              <div class="word-back-header">
+                <span class="word-translit" id="wfcTranslit">namaste</span>
+                <span class="pos-badge" id="wfcPOS">greeting</span>
+              </div>
+              <div class="word-english-meaning" id="wfcEnglish">hello / greetings</div>
+              <div class="example-box full-width">
+                <div class="ex-title">Example in context:</div>
+                <div class="ex-hindi" id="wfcExHindi">नमस्ते, आप कैसे हैं?</div>
+                <div class="ex-translit" id="wfcExTranslit">namaste, aap kaise hain?</div>
+                <div class="ex-meaning" id="wfcExEnglish">"Hello, how are you?"</div>
+              </div>
+              <button class="btn-audio" id="wfcAudioExBtn">🔊 Hear Sentence</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SRS Rating Buttons -->
+        <div class="srs-controls">
+          <div class="srs-buttons">
+            <button class="btn-srs btn-again" id="btnSRSAgain">
+              <span class="srs-title">Hard / Again</span>
+              <span class="srs-sub">Review in 1 day</span>
+            </button>
+            <button class="btn-srs btn-good" id="btnSRSGood">
+              <span class="srs-title">Good</span>
+              <span class="srs-sub">Review in 3 days</span>
+            </button>
+            <button class="btn-srs btn-easy" id="btnSRSEasy">
+              <span class="srs-title">Easy / Mastered</span>
+              <span class="srs-sub">Review in 7+ days</span>
+            </button>
+          </div>
+          <div class="srs-nav-row">
+            <button class="btn-nav" id="btnPrevWordCard">← Previous</button>
+            <button class="btn-nav" id="btnNextWordCard">Skip / Next →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 4: QUIZ & CHALLENGE ARENA
+         ======================================================== -->
+    <section id="tab-quiz" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>Interactive Quiz Arena (प्रश्नोत्तरी)</h2>
+          <p class="subtitle">Test your Hindi script recognition, listening comprehension, and vocabulary mastery.</p>
+        </div>
+      </div>
+
+      <!-- Quiz Setup Screen -->
+      <div id="quizSetupScreen" class="quiz-setup-box">
+        <h3>Choose Your Challenge</h3>
+        
+        <div class="quiz-options-grid">
+          <div class="quiz-option-card active" data-type="letters">
+            <div class="q-icon">🔤</div>
+            <h4>Devanagari Script Quiz</h4>
+            <p>Test letter sounds, romanization, and character recognition.</p>
+          </div>
+          <div class="quiz-option-card" data-type="words">
+            <div class="q-icon">📚</div>
+            <h4>1000 Words Vocabulary Quiz</h4>
+            <p>Translate from Hindi to English, English to Hindi, and audio test.</p>
+          </div>
+        </div>
+
+        <div class="quiz-config-row">
+          <div class="config-field">
+            <label for="quizQuestionCount">Anzahl Fragen:</label>
+            <select id="quizQuestionCount" class="form-select">
+              <option value="5">5 Fragen (Schnell)</option>
+              <option value="10" selected>10 Fragen (Standard)</option>
+              <option value="15">15 Fragen (Herausforderung)</option>
+              <option value="20">20 Fragen (Großes Quiz)</option>
+              <option value="25">25 Fragen (Meister-Session)</option>
+            </select>
+          </div>
+
+          <!-- Letters quiz category selector -->
+          <div class="config-field" id="quizLetterField">
+            <label for="quizLetterCategorySelect">Zeichen-Bereich:</label>
+            <select id="quizLetterCategorySelect" class="form-select">
+              <option value="all" selected>🌟 Alle Zeichen (79 Devanagari)</option>
+              <option value="vowel">Nur Vokale / स्वर (13)</option>
+              <option value="consonant">Nur Konsonanten / व्यंजन (35)</option>
+              <option value="matra">Nur Vokalzeichen / मात्राएँ (14)</option>
+              <option value="conjunct">Nur Ligaturen / संयुक्ताक्षर (7)</option>
+              <option value="number">Nur Ziffern / अंक (10)</option>
+            </select>
+          </div>
+
+          <!-- Words quiz deck selector -->
+          <div class="config-field" id="quizDeckField" style="display: none;">
+            <label for="quizDeckSelect">Wortschatz-Fokus:</label>
+            <select id="quizDeckSelect" class="form-select">
+              <option value="all" selected>🌟 Alle Decks zusammen (Deck 1–20 • 1000 Wörter gemischt)</option>
+              <!-- Dynamically populated via JS -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Touch-Friendly Deck Quick Chips for Android screens -->
+        <div class="quiz-deck-chips-container" id="quizDeckChipsContainer" style="display: none;">
+          <div class="deck-chips-label">
+            <span>Schnellauswahl Decks:</span>
+            <span class="deck-selection-indicator" id="deckSelectionIndicator">🌟 Alle Decks aktiv</span>
+          </div>
+          <div class="deck-chips-scroll" id="quizDeckChips">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <button class="btn-primary btn-large" id="btnStartQuiz">🚀 Start Quiz</button>
+      </div>
+
+      <!-- Quiz Active Playing Screen -->
+      <div id="quizPlayScreen" class="quiz-play-box" style="display: none;">
+        <div class="quiz-header-bar">
+          <span id="quizQuestionNumber">Question 1 of 10</span>
+          <span class="quiz-score-badge">Score: <strong id="quizCurrentScore">0</strong></span>
+        </div>
+
+        <div class="quiz-question-card">
+          <div class="quiz-sound-prompt" id="quizAudioPrompt" style="display: none;">
+            <button class="btn-audio btn-large" id="btnQuizPlayAudio">🔊 Play Pronunciation</button>
+          </div>
+          <h3 id="quizQuestionTitle">What is the pronunciation of character 'क'?</h3>
+          <div class="quiz-target-character" id="quizTargetChar" style="display: none;">क</div>
+          
+          <div class="quiz-options-container" id="quizOptionsContainer">
+            <!-- 4 Option buttons rendered dynamically -->
+          </div>
+
+          <div id="quizFeedbackBox" class="quiz-feedback-box" style="display: none;">
+            <!-- Feedback with explanation -->
+          </div>
+        </div>
+
+        <div class="quiz-actions-footer">
+          <button class="btn-primary" id="btnNextQuizQuestion" style="display: none;">Next Question →</button>
+        </div>
+      </div>
+
+      <!-- Quiz Results Screen -->
+      <div id="quizResultScreen" class="quiz-result-box" style="display: none;">
+        <div class="result-trophy">🏆</div>
+        <h2>Quiz Completed!</h2>
+        <div class="result-score-ring">
+          <span id="resultScoreText">8 / 10</span>
+          <span id="resultPercentText">80% Accuracy</span>
+        </div>
+        <p id="resultEncouragement">उत्कृष्ट! (Excellent work! Keep it up!)</p>
+
+        <div class="result-buttons">
+          <button class="btn-primary" id="btnRestartQuiz">🔄 Play Again</button>
+          <button class="btn-secondary" id="btnViewDashboardFromQuiz">📊 View Progress</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 5: DASHBOARD & USER PROGRESS
+         ======================================================== -->
+    <section id="tab-dashboard" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>Learning Analytics & Progress (प्रगति)</h2>
+          <p class="subtitle">Track your mastery of the Devanagari script, vocabulary milestones, and study consistency.</p>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Stats Card 1: Alphabet -->
+        <div class="stat-card">
+          <div class="stat-icon">🔤</div>
+          <div class="stat-info">
+            <span class="stat-label">Devanagari Characters</span>
+            <div class="stat-number"><span id="dashLettersMastered">0</span> <small>/ 79 Mastered</small></div>
+            <div class="progress-bar-bg">
+              <div id="dashLettersBar" class="progress-bar-fill" style="width: 0%;"></div>
+            </div>
+            <span class="stat-sub" id="dashLettersDetail">0 in learning • 0 stroke practices</span>
+          </div>
+        </div>
+
+        <!-- Stats Card 2: 1000 Words -->
+        <div class="stat-card">
+          <div class="stat-icon">📚</div>
+          <div class="stat-info">
+            <span class="stat-label">Core 1000 Vocabulary</span>
+            <div class="stat-number"><span id="dashWordsMastered">0</span> <small>/ 1000 Mastered</small></div>
+            <div class="progress-bar-bg">
+              <div id="dashWordsBar" class="progress-bar-fill" style="width: 0%;"></div>
+            </div>
+            <span class="stat-sub" id="dashWordsDetail">0 in active learning</span>
+          </div>
+        </div>
+
+        <!-- Stats Card 3: Quiz Accuracy -->
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-info">
+            <span class="stat-label">Quiz Accuracy</span>
+            <div class="stat-number"><span id="dashQuizAccuracy">0%</span></div>
+            <span class="stat-sub" id="dashQuizDetail">0 questions answered in 0 sessions</span>
+          </div>
+        </div>
+
+        <!-- Stats Card 4: Daily Goal -->
+        <div class="stat-card">
+          <div class="stat-icon">🔥</div>
+          <div class="stat-info">
+            <span class="stat-label">Daily Goal & Streak</span>
+            <div class="stat-number"><span id="dashStreak">1</span> <small>Days Active</small></div>
+            <span class="stat-sub">Target: 20 words or letters daily</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decks Overview Table -->
+      <div class="decks-overview-card">
+        <h3>20 Vocabulary Decks Progress</h3>
+        <div class="decks-table-wrapper">
+          <table class="decks-table" id="dashDecksTable">
+            <thead>
+              <tr>
+                <th>Deck</th>
+                <th>Theme</th>
+                <th>Range</th>
+                <th>Mastered</th>
+                <th>Learning</th>
+                <th>Progress</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal: Letter Detail View -->
+  <div class="modal" id="letterDetailModal">
+    <div class="modal-content">
+      <button class="modal-close" id="btnCloseLetterModal">✕</button>
+      <div class="modal-header">
+        <div class="modal-char" id="modalLetterChar">क</div>
+        <div>
+          <h3 id="modalLetterTranslit">ka</h3>
+          <span class="badge" id="modalLetterCategory">Consonant (Velar)</span>
+        </div>
+        <button class="btn-audio" id="btnModalSpeakLetter">🔊 Pronounce</button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-row">
+          <strong>Pronunciation Guide:</strong>
+          <p id="modalLetterGuide">Unaspirated voiceless 'k' sound as in 'skate'</p>
+        </div>
+        <div class="detail-row">
+          <strong>Stroke Directions:</strong>
+          <p id="modalLetterStroke">1. Vertical line, 2. Loop on left, 3. Arch on right, 4. Top bar</p>
+        </div>
+        <div class="detail-row example-highlight">
+          <strong>Example Hindi Word:</strong>
+          <div class="modal-ex-display">
+            <span class="modal-ex-word" id="modalLetterExWord">कमल</span>
+            <span class="modal-ex-translit" id="modalLetterExTranslit">(kamal)</span>
+            <span class="modal-ex-trans" id="modalLetterExTrans">— lotus</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="btnModalGoDraw">✍️ Practice Writing on Canvas</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Switch / Create User -->
+  <div class="modal" id="userModal">
+    <div class="modal-content small-modal">
+      <button class="modal-close" id="btnCloseUserModal">✕</button>
+      <h3>Learner Profiles</h3>
+      <div class="user-list" id="modalUserList">
+        <!-- List of existing users -->
+      </div>
+      <div class="create-user-form">
+        <h4>Create New Learner:</h4>
+        <div class="input-inline">
+          <input type="text" id="newUsernameInput" placeholder="Enter name...">
+          <button class="btn-primary" id="btnCreateUser">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Settings & Deck Import/Export -->
+  <div class="modal" id="settingsModal">
+    <div class="modal-content">
+      <button class="modal-close" id="btnCloseSettingsModal">✕</button>
+      <h3>⚙️ Settings & Word Decks Import</h3>
+
+      <div class="settings-section">
+        <h4>📥 Import Custom Word Deck (JSON)</h4>
+        <p class="settings-desc">Import vocabulary JSON files to expand your flashcard decks, search list, and quizzes.</p>
+
+        <div class="import-controls">
+          <input type="file" id="importFileInput" accept=".json" style="display: none;">
+          <button class="btn-primary" id="btnSelectImportFile">📁 Select JSON File to Import</button>
+          <button class="btn-secondary" id="btnExportWords">📤 Export All Words</button>
+        </div>
+        <div id="importStatusMessage" class="import-status"></div>
+      </div>
+
+      <div class="settings-section">
+        <h4>🗂️ Create New Custom Word Deck</h4>
+        <p class="settings-desc">Create new decks (e.g., Deck 21, Travel Words) to organize your added vocabulary.</p>
+        <div class="add-word-form">
+          <div class="form-row">
+            <input type="text" id="newDeckTitleInput" placeholder="Deck title (e.g. Travel & Food Vocabulary)">
+            <button class="btn-primary" id="btnCreateCustomDeck">➕ Create Deck</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h4>➕ Quick Add Single Word</h4>
+        <div class="add-word-form">
+          <div class="form-row">
+            <input type="text" id="addHindi" placeholder="Hindi (e.g. पानी)">
+            <input type="text" id="addTranslit" placeholder="Romanization (e.g. paani)">
+          </div>
+          <div class="form-row">
+            <input type="text" id="addEnglish" placeholder="English (e.g. water)">
+            <select id="addDeckSelect">
+              <!-- Dynamically populated 1..20 + Custom -->
+            </select>
+          </div>
+          <button class="btn-primary" id="btnAddSingleWord">➕ Save Word to Deck</button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h4>📊 Custom Vocabulary Summary</h4>
+        <div id="customWordsSummary" class="custom-summary-box">
+          <span id="customWordsCount">0 custom words imported</span>
+          <button class="btn-danger-sm" id="btnClearCustomWords">Clear Custom Words</button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h4>ℹ️ JSON Import Format Guide</h4>
+        <pre class="json-template-code">[
+  {
+    "hindi": "पानी",
+    "transliteration": "paani",
+    "english": "water",
+    "deck": 1,
+    "part_of_speech": "noun",
+    "example_hindi": "मुझे पानी चाहिए।",
+    "example_transliteration": "mujhe paani chahiye.",
+    "example_english": "I want water."
+  }
+]</pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- One UI Mobile Bottom Navigation Bar (Optimized for thumb reach on Galaxy S24 Ultra & mobile) -->
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <button class="bnav-tab active" data-tab="letters">
+      <span class="bnav-icon">🔤</span>
+      <span class="bnav-label">Letters</span>
+    </button>
+    <button class="bnav-tab" data-tab="canvas">
+      <span class="bnav-icon">✍️</span>
+      <span class="bnav-label">Canvas</span>
+    </button>
+    <button class="bnav-tab" data-tab="words">
+      <span class="bnav-icon">📚</span>
+      <span class="bnav-label">1000 Words</span>
+    </button>
+    <button class="bnav-tab" data-tab="quiz">
+      <span class="bnav-icon">🎯</span>
+      <span class="bnav-label">Quiz</span>
+    </button>
+    <button class="bnav-tab" data-tab="dashboard">
+      <span class="bnav-icon">📊</span>
+      <span class="bnav-label">Progress</span>
+    </button>
+  </nav>
+
+  <!-- Client JavaScript -->
+  <script src="./app.js"></script>
+</body>
+
+</html>

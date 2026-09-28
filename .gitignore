@@ -1,0 +1,26 @@
+# Gradle files
+.gradle/
+build/
+app/build/
+
+# Local configuration files
+local.properties
+
+# Android Studio / IntelliJ IDEA
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetStudio.xml
+.idea/deploymentTargetSelector.xml
+*.iml
+
+# Built APKs / Bundles
+*.apk
+*.aab
+NamasteHindi-release.apk
+
+# OS generated
+.DS_Store
+Thumbs.db

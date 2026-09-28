@@ -1,0 +1,10 @@
+[package]
+name = "namaste-hindi-static"
+version = "0.1.0"
+description = "Hindi Learning Platform Static WebApp"
+
+[dependencies]
+"wasmer/static-web-server" = "^1"
+
+[fs]
+public = "."

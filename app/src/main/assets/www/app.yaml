@@ -1,0 +1,5 @@
+name: namaste-hindi-static
+package: wasmer/static-web-server
+volumes:
+  - name: static-data
+    mount: /public
