@@ -347,34 +347,34 @@
 
         <div class="quiz-config-row">
           <div class="config-field">
-            <label for="quizQuestionCount">Anzahl Fragen:</label>
+            <label for="quizQuestionCount">Number of Questions:</label>
             <select id="quizQuestionCount" class="form-select">
-              <option value="5">5 Fragen (Schnell)</option>
-              <option value="10" selected>10 Fragen (Standard)</option>
-              <option value="15">15 Fragen (Herausforderung)</option>
-              <option value="20">20 Fragen (Großes Quiz)</option>
-              <option value="25">25 Fragen (Meister-Session)</option>
+              <option value="5">5 Questions (Quick)</option>
+              <option value="10" selected>10 Questions (Standard)</option>
+              <option value="15">15 Questions (Challenge)</option>
+              <option value="20">20 Questions (Large Quiz)</option>
+              <option value="25">25 Questions (Master Session)</option>
             </select>
           </div>
 
           <!-- Letters quiz category selector -->
           <div class="config-field" id="quizLetterField">
-            <label for="quizLetterCategorySelect">Zeichen-Bereich:</label>
+            <label for="quizLetterCategorySelect">Character Range:</label>
             <select id="quizLetterCategorySelect" class="form-select">
-              <option value="all" selected>🌟 Alle Zeichen (79 Devanagari)</option>
-              <option value="vowel">Nur Vokale / स्वर (13)</option>
-              <option value="consonant">Nur Konsonanten / व्यंजन (35)</option>
-              <option value="matra">Nur Vokalzeichen / मात्राएँ (14)</option>
-              <option value="conjunct">Nur Ligaturen / संयुक्ताक्षर (7)</option>
-              <option value="number">Nur Ziffern / अंक (10)</option>
+              <option value="all" selected>🌟 All Characters (79 Devanagari)</option>
+              <option value="vowel">Vowels Only / स्वर (13)</option>
+              <option value="consonant">Consonants Only / व्यंजन (35)</option>
+              <option value="matra">Vowel Signs Only / मात्राएँ (14)</option>
+              <option value="conjunct">Conjuncts Only / संयुक्ताक्षर (7)</option>
+              <option value="number">Numbers Only / अंक (10)</option>
             </select>
           </div>
 
           <!-- Words quiz deck selector -->
           <div class="config-field" id="quizDeckField" style="display: none;">
-            <label for="quizDeckSelect">Wortschatz-Fokus:</label>
+            <label for="quizDeckSelect">Vocabulary Focus:</label>
             <select id="quizDeckSelect" class="form-select">
-              <option value="all" selected>🌟 Alle Decks zusammen (Deck 1–20 • 1000 Wörter gemischt)</option>
+              <option value="all" selected>🌟 All Decks Combined (Decks 1–20 • 1000 Words Mixed)</option>
               <!-- Dynamically populated via JS -->
             </select>
           </div>
@@ -383,8 +383,8 @@
         <!-- Touch-Friendly Deck Quick Chips for Android screens -->
         <div class="quiz-deck-chips-container" id="quizDeckChipsContainer" style="display: none;">
           <div class="deck-chips-label">
-            <span>Schnellauswahl Decks:</span>
-            <span class="deck-selection-indicator" id="deckSelectionIndicator">🌟 Alle Decks aktiv</span>
+            <span>Quick Select Decks:</span>
+            <span class="deck-selection-indicator" id="deckSelectionIndicator">🌟 All Decks Active</span>
           </div>
           <div class="deck-chips-scroll" id="quizDeckChips">
             <!-- Populated via JS -->

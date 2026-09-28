@@ -1631,7 +1631,7 @@ function populateQuizDeckSelectors() {
     const optAll = document.createElement("option");
     optAll.value = "all";
     optAll.selected = true;
-    optAll.textContent = "🌟 Alle Decks zusammen (Deck 1–20 • 1000 Wörter gemischt)";
+    optAll.textContent = "🌟 All Decks Combined (Decks 1–20 • 1000 Words Mixed)";
     quizDeckSel.appendChild(optAll);
 
     // 2. Individual Decks 1 to 20
@@ -1659,7 +1659,7 @@ function populateQuizDeckSelectors() {
     chipAll.type = "button";
     chipAll.className = "quiz-chip active";
     chipAll.dataset.deck = "all";
-    chipAll.innerHTML = "🌟 Alle Decks (1000)";
+    chipAll.innerHTML = "🌟 All Decks (1000)";
     chipAll.onclick = () => selectQuizDeckChip("all");
     chipsBox.appendChild(chipAll);
 
@@ -1693,7 +1693,7 @@ function syncQuizDeckChips(deckValue) {
   const indicator = document.getElementById("deckSelectionIndicator");
   if (indicator) {
     if (deckValue === "all" || !deckValue) {
-      indicator.textContent = "🌟 Alle 20 Decks aktiv (1000 Wörter)";
+      indicator.textContent = "🌟 All 20 Decks Active (1000 Words)";
       indicator.className = "deck-selection-indicator all-active";
     } else {
       const title = (AppState.allDecks && AppState.allDecks[deckValue - 1])
@@ -1782,7 +1782,7 @@ async function startQuiz() {
   }
 
   if (!AppState.quizQuestions || AppState.quizQuestions.length === 0) {
-    alert("Quiz-Fragen konnten nicht vorbereitet werden. Bitte stelle sicher, dass die Daten geladen sind.");
+    alert("Could not prepare quiz questions. Please make sure data is loaded.");
     return;
   }
 
@@ -1825,7 +1825,7 @@ function generateClientQuiz(type, count, deck, letterCategory = "all") {
         const options = shuffleArray([target.transliteration, ...distractors.map(d => d.transliteration)]);
         questions.push({
           type: "char_to_translit",
-          question: `Wie lautet die Aussprache dieses Devanagari-Zeichens?`,
+          question: `What is the pronunciation of this Devanagari character?`,
           target_char: target.char,
           audio_text: target.audio_text || target.char,
           options,
@@ -1836,7 +1836,7 @@ function generateClientQuiz(type, count, deck, letterCategory = "all") {
         const options = shuffleArray([target.char, ...distractors.map(d => d.char)]);
         questions.push({
           type: "audio_meaning",
-          question: `Höre genau zu: Welches Zeichen wird gesprochen?`,
+          question: `Listen carefully: Which character is spoken?`,
           audio_text: target.audio_text || target.char,
           options,
           correct_answer: target.char,
@@ -1872,7 +1872,7 @@ function generateClientQuiz(type, count, deck, letterCategory = "all") {
         const options = shuffleArray([target.english, ...distractors.map(d => d.english)]);
         questions.push({
           type: "word_meaning",
-          question: `Was bedeutet das Wort "${target.hindi}" (${target.transliteration})?`,
+          question: `What does the word "${target.hindi}" (${target.transliteration}) mean?`,
           hindi: target.hindi,
           audio_text: target.audio_text || target.hindi,
           options,
@@ -1887,7 +1887,7 @@ function generateClientQuiz(type, count, deck, letterCategory = "all") {
         ]);
         questions.push({
           type: "word_translation",
-          question: `Welches Hindi-Wort entspricht: "${target.english}"?`,
+          question: `Which Hindi word corresponds to: "${target.english}"?`,
           audio_text: target.audio_text || target.hindi,
           options,
           correct_answer: `${target.hindi} (${target.transliteration})`,
@@ -1901,7 +1901,7 @@ function generateClientQuiz(type, count, deck, letterCategory = "all") {
         ]);
         questions.push({
           type: "audio_meaning",
-          question: `Höre die Aussprache: Welches Wort wurde gesagt?`,
+          question: `Listen to the pronunciation: Which word was spoken?`,
           audio_text: target.audio_text || target.hindi,
           options,
           correct_answer: `${target.hindi} (${target.english})`,
@@ -1927,7 +1927,7 @@ function renderCurrentQuizQuestion() {
   const total = AppState.quizQuestions.length;
   AppState.quizAnswered = false;
 
-  document.getElementById("quizQuestionNumber").textContent = `Frage ${AppState.currentQuizIndex + 1} von ${total}`;
+  document.getElementById("quizQuestionNumber").textContent = `Question ${AppState.currentQuizIndex + 1} of ${total}`;
   document.getElementById("quizCurrentScore").textContent = AppState.quizScore;
   
   let headerHtml = q.question;
