@@ -16,10 +16,10 @@ local.properties
 .idea/deploymentTargetSelector.xml
 *.iml
 
-# Built APKs / Bundles
+# Built APKs / Bundles (Allow release APK in root)
 *.apk
 *.aab
-NamasteHindi-release.apk
+!NamasteHindi-release.apk
 
 # OS generated
 .DS_Store
